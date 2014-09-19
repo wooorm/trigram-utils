@@ -85,7 +85,7 @@ Gets cleaned trigrams as a dictionary: the keys of the objects are trigrams, the
 
 Gets cleaned trigrams with occurrence counts as a tuple: the first indice (`0`) being the trigram, the second (`1`) the occurrence count.
 
-### trigramUtils.tuplesAsDictionary(Array.<Array.<string, number>>)
+### trigramUtils.tuplesAsDictionary(Array.\<Array.\<string, number\>\>)
 
 Transforms an array of trigram–occurrence tuples (as returned by `trigramUtils.asTuples(string)`) as a dictionary (see `trigramUtils.asDictionary(string)`);
 
