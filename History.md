@@ -1,5 +1,5 @@
 
-n.n.n / 2014-09-19
+0.0.2 / 2014-09-19
 ==================
 
  * Fix unescaped HTML-like sequence in docs
