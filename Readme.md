@@ -1,4 +1,4 @@
-# trigram-utilities [![Build Status](https://travis-ci.org/wooorm/trigram-utilities.svg?branch=master)](https://travis-ci.org/wooorm/trigram-utilities) [![Coverage Status](https://img.shields.io/coveralls/wooorm/trigram-utilities.svg)](https://coveralls.io/r/wooorm/trigram-utilities?branch=master)
+# trigram-utils [![Build Status](https://travis-ci.org/wooorm/trigram-utils.svg?branch=master)](https://travis-ci.org/wooorm/trigram-utils) [![Coverage Status](https://img.shields.io/coveralls/wooorm/trigram-utils.svg)](https://coveralls.io/r/wooorm/trigram-utils?branch=master)
 
 Some trigram language statistics utility functions.
 
@@ -8,30 +8,30 @@ They have their own repo here to make sure [wooorm/trigrams](https://github.com/
 
 npm:
 ```sh
-$ npm install trigram-utilities
+$ npm install trigram-utils
 ```
 
 Component:
 ```sh
-$ component install wooorm/trigram-utilities
+$ component install wooorm/trigram-utils
 ```
 
 Bower:
 ```sh
-$ bower install trigram-utilities
+$ bower install trigram-utils
 ```
 
 ## Usage
 
 ```js
-var trigramUtilities = require('trigram-utilities');
+var trigramUtils = require('trigram-utils');
 
-trigramUtilities.clean(' t@rololol '); // 't rololol'
+trigramUtils.clean(' t@rololol '); // 't rololol'
 
-trigramUtilities.trigrams(' t@rololol ');
+trigramUtils.trigrams(' t@rololol ');
 // [ ' t ', 't r', ' ro', 'rol', 'olo', 'lol', 'olo', 'lol', 'ol ' ]
 
-trigramUtilities.asDictionary(' t@rololol ');
+trigramUtils.asDictionary(' t@rololol ');
 /*
  * {
  *   'ol ': 1,
@@ -44,7 +44,7 @@ trigramUtilities.asDictionary(' t@rololol ');
  * }
  */
 
-var tuples = trigramUtilities.asTuples(' t@rololol ');
+var tuples = trigramUtils.asTuples(' t@rololol ');
 /*
  * [
  *   ['ol ': 1],
@@ -57,7 +57,7 @@ var tuples = trigramUtilities.asTuples(' t@rololol ');
  * ]
  */
 
-trigramUtilities.tuplesAsDictionary(tuples.slice(-3));
+trigramUtils.tuplesAsDictionary(tuples.slice(-3));
 /*
  * {
  *   'olo': 2,
@@ -69,25 +69,25 @@ trigramUtilities.tuplesAsDictionary(tuples.slice(-3));
 
 ## API
 
-### trigramUtilities.clean(string)
+### trigramUtils.clean(string)
 
 Cleans a given string: strips [certain](index.js#L21-L54) (for language detection) useless punctuation, symbols, and numbers. Concatenated extraneous white space, trims, lowercases, and pads (with one space on both sides).
 
-### trigramUtilities.trigrams(string)
+### trigramUtils.trigrams(string)
 
 Gets cleaned trigrams (see [wooorm/n-gram](https://github.com/wooorm/n-gram)).
 
-### trigramUtilities.asDictionary(string)
+### trigramUtils.asDictionary(string)
 
 Gets cleaned trigrams as a dictionary: the keys of the objects are trigrams, the values are occurrence counts.
 
-### trigramUtilities.asTuples(string)
+### trigramUtils.asTuples(string)
 
 Gets cleaned trigrams with occurrence counts as a tuple: the first indice (`0`) being the trigram, the second (`1`) the occurrence count.
 
-### trigramUtilities.tuplesAsDictionary(Array.<Array.<string, number>>)
+### trigramUtils.tuplesAsDictionary(Array.<Array.<string, number>>)
 
-Transforms an array of trigram–occurrence tuples (as returned by `trigramUtilities.asTuples(string)`) as a dictionary (see `trigramUtilities.asDictionary(string)`);
+Transforms an array of trigram–occurrence tuples (as returned by `trigramUtils.asTuples(string)`) as a dictionary (see `trigramUtils.asDictionary(string)`);
 
 ## License
 
