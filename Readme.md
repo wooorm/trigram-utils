@@ -71,7 +71,7 @@ trigramUtils.tuplesAsDictionary(tuples.slice(-3));
 
 ### trigramUtils.clean(string)
 
-Cleans a given string: strips [certain](index.js#L21-L54) (for language detection) useless punctuation, symbols, and numbers. Concatenated extraneous white space, trims, lowercases, and pads (with one space on both sides).
+Cleans a given string: strips [certain](index.js#L26-L59) (for language detection) useless punctuation, symbols, and numbers. Concatenated extraneous white space, trims, lowercases, and pads (with one space on both sides).
 
 ### trigramUtils.trigrams(string)
 
