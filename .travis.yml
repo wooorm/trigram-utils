@@ -1,0 +1,13 @@
+language: node_js
+script: npm run-script test-travis
+node_js:
+- '0.10'
+- '0.11'
+after_script: npm install coveralls@2.10.0 && cat ./coverage/lcov.info | coveralls
+deploy:
+  provider: npm
+  email: tituswormer@gmail.com
+  api_key:
+    secure: X/sPn26Wc8o8/NZ3GT3RwhAMGPFCSJ74aM7OSeNZyrVZW14Zw6edbSm6y6+R4A++7suh+27+0EONRY/aibIpavbCzvJCR6uCF+Jjoo9jRT3WBmx6oDI7CL9cm/0SiYvvBR4n7wmG2VdaFeh4ulP/3fd6NvtNeTh083OkFc5LSDI=
+  on:
+    repo: wooorm/trigram-utils

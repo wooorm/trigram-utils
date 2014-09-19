@@ -1,0 +1,19 @@
+{
+  "name": "trigram-utils",
+  "version": "0.0.1",
+  "description": "Few language trigram utility functions",
+  "license": "MIT",
+  "keywords": [
+    "trigram",
+    "n-gram",
+    "language",
+    "utilities"
+  ],
+  "dependencies": {
+    "wooorm/n-gram": "^0.0.1"
+  },
+  "scripts": [
+    "index.js"
+  ],
+  "repository": "wooorm/trigram-utils"
+}
