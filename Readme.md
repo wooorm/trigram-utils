@@ -1,8 +1,6 @@
 # trigram-utils [![Build Status](https://travis-ci.org/wooorm/trigram-utils.svg?branch=master)](https://travis-ci.org/wooorm/trigram-utils) [![Coverage Status](https://img.shields.io/coveralls/wooorm/trigram-utils.svg)](https://coveralls.io/r/wooorm/trigram-utils?branch=master)
 
-Some trigram language statistics utility functions.
-
-They have their own repo here to make sure [wooorm/trigrams](https://github.com/wooorm/trigrams) (trigram information for the Universal Declaration of Human Rights) and [wooorm/franc](https://github.com/wooorm/franc) (language detection) use the same cleaning and classification methods.
+Trigram language statistics utility functions, in their own repository to make sure [wooorm/trigrams](https://github.com/wooorm/trigrams) (trigram information for the Universal Declaration of Human Rights) and [wooorm/franc](https://github.com/wooorm/franc) (language detection) use the same cleaning and classification methods.
 
 ## Installation
 
@@ -71,23 +69,23 @@ trigramUtils.tuplesAsDictionary(tuples.slice(-3));
 
 ### trigramUtils.clean(string)
 
-Cleans a given string: strips [certain](index.js#L26-L59) (for language detection) useless punctuation, symbols, and numbers. Concatenated extraneous white space, trims, lowercases, and pads (with one space on both sides).
+Clean a given string: strips [certain](index.js#L26-L59) (for language detection) useless punctuation, symbols, and numbers. Concatenate extraneous white space, trim, lowercase, and pad (with one space on both sides).
 
 ### trigramUtils.trigrams(string)
 
-Gets cleaned trigrams (see [wooorm/n-gram](https://github.com/wooorm/n-gram)).
+Get clean trigrams (see [wooorm/n-gram](https://github.com/wooorm/n-gram)).
 
 ### trigramUtils.asDictionary(string)
 
-Gets cleaned trigrams as a dictionary: the keys of the objects are trigrams, the values are occurrence counts.
+Get clean trigrams as a dictionary: keys are trigrams, values are occurrence counts.
 
 ### trigramUtils.asTuples(string)
 
-Gets cleaned trigrams with occurrence counts as a tuple: the first indice (`0`) being the trigram, the second (`1`) the occurrence count.
+Get clean trigrams with occurrence counts as a tuple: first indice (`0`) the trigram, second (`1`) the occurrence count.
 
 ### trigramUtils.tuplesAsDictionary(Array.\<Array.\<string, number\>\>)
 
-Transforms an array of trigram–occurrence tuples (as returned by `trigramUtils.asTuples(string)`) as a dictionary (see `trigramUtils.asDictionary(string)`);
+Transform an `Array` of trigram–occurrence tuples (as returned by `trigramUtils.asTuples(string)`) as a dictionary (see `trigramUtils.asDictionary(string)`);
 
 ## License
 
