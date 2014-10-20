@@ -4,7 +4,7 @@
  * Module dependencies (trigram-utils, assert).
  */
 
-var utils = require('..'),
+var utils = require('./'),
     assert = require('assert');
 
 /**
