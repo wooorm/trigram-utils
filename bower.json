@@ -23,11 +23,12 @@
     ".*",
     "*.log",
     "*.md",
+    "build/",
+    "components/",
+    "coverage/",
+    "node_modules/",
+    "spec/",
     "component.json",
-    "package.json",
-    "coverage",
-    "components",
-    "node_modules",
-    "spec"
+    "package.json"
   ]
 }
