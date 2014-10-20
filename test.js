@@ -1,14 +1,17 @@
 'use strict';
 
 /**
- * Module dependencies (trigram-utils, assert).
+ * Dependencies.
  */
 
-var utils = require('./'),
-    assert = require('assert');
+var utils,
+    assert;
+
+utils = require('./');
+assert = require('assert');
 
 /**
- * Makes tuples easier to assert.
+ * Make tuples easier to assert.
  */
 
 function joinTuples(tupples) {
@@ -16,6 +19,10 @@ function joinTuples(tupples) {
         return tuple.join('|');
     });
 }
+
+/**
+ * Tests.
+ */
 
 describe('trigramUtils', function () {
     it('should be an Object', function () {
@@ -43,7 +50,8 @@ describe('trigramUtils.clean()', function () {
     });
 
     it('should stringify a value', function () {
-        var value, stringified;
+        var value,
+            stringified;
 
         stringified = 'test';
 
@@ -243,7 +251,8 @@ describe('trigramUtils.tuplesAsDictionary()', function () {
     });
 
     it('should return tuples as a dictionary', function () {
-        var tuples, result;
+        var tuples,
+            result;
 
         tuples = [[' te', 1], ['tes', 1], ['est', 1], ['st ', 1]];
 
@@ -256,7 +265,8 @@ describe('trigramUtils.tuplesAsDictionary()', function () {
     });
 
     it('should correctly handle counts', function () {
-        var tuples, result;
+        var tuples,
+            result;
 
         tuples = [[' te', 1], ['tes', 1], ['est', 1], ['st ', 1]];
 
@@ -269,7 +279,8 @@ describe('trigramUtils.tuplesAsDictionary()', function () {
     });
 
     it('should count duplicate trigrams', function () {
-        var tuples, result;
+        var tuples,
+            result;
 
         tuples = [
             ['st ', 1],
