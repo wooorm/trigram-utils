@@ -1,20 +1,17 @@
-// ==ClosureCompiler==
-// @output_file_name default.js
-// @compilation_level ADVANCED_OPTIMIZATIONS
-// ==/ClosureCompiler==
-
 'use strict';
 
-var getTrigrams, EXPRESSION_SYMBOLS, has;
+var getTrigrams,
+    EXPRESSION_SYMBOLS,
+    has;
 
 /**
- * Module dependencies.
+ * Dependencies.
  */
 
 getTrigrams = require('n-gram').trigram;
 
 /**
- * Faster, securer, existence checks.
+ * Cache.
  */
 
 has = Object.prototype.hasOwnProperty;
@@ -62,14 +59,14 @@ has = Object.prototype.hasOwnProperty;
 EXPRESSION_SYMBOLS = /[\u0021-\u0040]+/g;
 
 /**
- * Clean a text input stream.
+ * Clean `value`.
  *
  * @example
  *   > clean('Some dirty  text.')
  *   // 'some dirty text'
  *
- * @param {string} value - the input value.
- * @returns {string} the cleaned value.
+ * @param {string} value
+ * @return {string}
  */
 
 function clean(value) {
@@ -85,7 +82,7 @@ function clean(value) {
 }
 
 /**
- * Deep regular sort on the number at `1` in both objects.
+ * Deep regular sort on item at `1` in both `Object`s.
  *
  * @example
  *   > [[0, 20], [0, 1], [0, 5]].sort(sort);
@@ -102,8 +99,8 @@ function sort(a, b) {
 /**
  * Get clean, padded, trigrams.
  *
- * @param {string} value - the input value.
- * @returns {Array.<string>} the cleaned, padded, tigrams.
+ * @param {string} value
+ * @return {Array.<string>}
  */
 
 function getCleanTrigrams(value) {
@@ -111,11 +108,11 @@ function getCleanTrigrams(value) {
 }
 
 /**
- * Get an object with trigrams as its attributes, and their
- * occurence count as their values
+ * Get an `Object` with trigrams as its attributes, and
+ * their occurence count as their values
  *
  * @param {string} value
- * @return {Object.<string, number>} - Object containing
+ * @return {Object.<string, number>} - `Object` containing
  *   weighted trigrams.
  */
 
@@ -143,12 +140,13 @@ function getCleanTrigramsAsDictionary(value) {
 }
 
 /**
- * Get the array containing trigram--count tuples from a
+ * Get an `Array` containing trigram--count tuples from a
  * given value.
  *
  * @param {string} value
- * @return {Array.<Array.<string, number>>} An array containing
- *   trigram--count tupples, sorted by count (low to high).
+ * @return {Array.<Array.<string, number>>} `Array`
+ *   containing trigram--count tupples, sorted by
+ *   count (low to high).
  */
 
 function getCleanTrigramsAsTuples(value) {
@@ -169,12 +167,12 @@ function getCleanTrigramsAsTuples(value) {
 }
 
 /**
- * Get the array containing trigram--count tuples from a
+ * Get an `Array` containing trigram--count tuples from a
  * given value.
  *
- * @param {Array.<Array.<string, number>>} tuples - the tuples
+ * @param {Array.<Array.<string, number>>} tuples - Tuples
  *   to transform into a dictionary.
- * @return {Object.<string, number>} The dictionary.
+ * @return {Object.<string, number>}
  */
 
 function getCleanTrigramTuplesAsDictionary(tuples) {
@@ -194,7 +192,7 @@ function getCleanTrigramTuplesAsDictionary(tuples) {
 }
 
 /**
- * Export the utilities.
+ * Expose utilities.
  */
 
 module.exports = {
