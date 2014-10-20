@@ -10,7 +10,7 @@
     "utilities"
   ],
   "dependencies": {
-    "wooorm/n-gram": "^0.0.1"
+    "wooorm/n-gram": "^0.1.0"
   },
   "scripts": [
     "index.js"
