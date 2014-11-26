@@ -89,4 +89,4 @@ Transform an `Array` of trigram–occurrence tuples (as returned by `trigramUtil
 
 ## License
 
-MIT © Titus Wormer
+MIT © [Titus Wormer](http://wooorm.com)
