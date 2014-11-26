@@ -56,7 +56,7 @@ describe('trigramUtils.clean()', function () {
         stringified = 'test';
 
         value = {
-            'toString' : function () {
+            'toString': function () {
                 return stringified;
             }
         };

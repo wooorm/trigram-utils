@@ -196,9 +196,9 @@ function getCleanTrigramTuplesAsDictionary(tuples) {
  */
 
 module.exports = {
-    'clean' : clean,
-    'trigrams' : getCleanTrigrams,
-    'asDictionary' : getCleanTrigramsAsDictionary,
-    'asTuples' : getCleanTrigramsAsTuples,
-    'tuplesAsDictionary' : getCleanTrigramTuplesAsDictionary
+    'clean': clean,
+    'trigrams': getCleanTrigrams,
+    'asDictionary': getCleanTrigramsAsDictionary,
+    'asTuples': getCleanTrigramsAsTuples,
+    'tuplesAsDictionary': getCleanTrigramTuplesAsDictionary
 };
