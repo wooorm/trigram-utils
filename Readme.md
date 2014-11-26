@@ -1,4 +1,4 @@
-# trigram-utils [![Build Status](https://travis-ci.org/wooorm/trigram-utils.svg?branch=master)](https://travis-ci.org/wooorm/trigram-utils) [![Coverage Status](https://img.shields.io/coveralls/wooorm/trigram-utils.svg)](https://coveralls.io/r/wooorm/trigram-utils?branch=master)
+# trigram-utils [![Build Status](https://img.shields.io/travis/wooorm/trigram-utils.svg?style=flat)](https://travis-ci.org/wooorm/trigram-utils) [![Coverage Status](https://img.shields.io/coveralls/wooorm/trigram-utils.svg?style=flat)](https://coveralls.io/r/wooorm/trigram-utils?branch=master)
 
 Trigram language statistics utility functions, in their own repository to make sure [wooorm/trigrams](https://github.com/wooorm/trigrams) (trigram information for the Universal Declaration of Human Rights) and [wooorm/franc](https://github.com/wooorm/franc) (language detection) use the same cleaning and classification methods.
 
