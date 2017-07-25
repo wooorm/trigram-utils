@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "collapse-white-space": "^1.0.3",
-    "n-gram": "^0.1.0",
+    "n-gram": "^1.0.0",
     "trim": "0.0.1"
   },
   "devDependencies": {
