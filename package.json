@@ -1,6 +1,6 @@
 {
   "name": "trigram-utils",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "A few language trigram utilities",
   "license": "MIT",
   "keywords": [
