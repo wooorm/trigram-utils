@@ -1,303 +1,113 @@
 'use strict';
 
-/**
- * Dependencies.
- */
+var test = require('tape');
+var utils = require('./');
 
-var utils,
-    assert;
+test('.clean', function (t) {
+  var blacklist = '!"#$%&\'()*+,-./0123456789:;<=>?@'.split('');
 
-utils = require('./');
-assert = require('assert');
+  t.equal(typeof utils.clean('test'), 'string', 'should return a string');
+  t.equal(utils.clean(), '', 'should accept a missing value');
+  t.equal(utils.clean(null), '', 'should accept `null`');
+  t.equal(utils.clean(undefined), '', 'should accept `undefined`');
 
-/**
- * Make tuples easier to assert.
- */
+  blacklist.forEach(function (character) {
+    t.equal(utils.clean(character), '', 'should remove `' + character + '`');
+  });
 
-function joinTuples(tupples) {
-    return tupples.map(function (tuple) {
-        return tuple.join('|');
-    });
+  t.equal(utils.clean('a  b'), 'a b', 'should collapse multiple spaces to one');
+  t.equal(utils.clean('a\n b'), 'a b', 'should collapse newlines and spaces to a space');
+  t.equal(utils.clean('a \tb'), 'a b', 'should collapse tabs and spaces to a space');
+
+  t.equal(utils.clean('\n\ta'), 'a', 'should trim initial white-space');
+  t.equal(utils.clean('a \f'), 'a', 'should trim final white-space');
+  t.equal(utils.clean('\ta \f'), 'a', 'should trim surrounding white-space');
+  t.equal(utils.clean('\t\n \f'), '', 'should trim white-space only input');
+
+  t.equal(utils.clean('AlPHA'), 'alpha', 'should lowercase mixed-case');
+  t.equal(utils.clean('BRAVO'), 'bravo', 'should lowercase uppercase');
+  t.equal(utils.clean('Charlie'), 'charlie', 'should lowercase sentence-case');
+
+  t.end();
+});
+
+test('.trigrams', function (t) {
+  t.ok(Array.isArray(utils.trigrams('test')), 'should return an array');
+  t.equal(utils.trigrams('test').join(), ' te,tes,est,st ', 'should return trigrams');
+  t.equal(utils.trigrams('te@st').join(), ' te,te ,e s, st,st ', 'should return cleaned trigrams (1)');
+  t.equal(utils.trigrams('\nte\tst ').join(), ' te,te ,e s, st,st ', 'should return cleaned trigrams (2)');
+  t.end();
+});
+
+test('.asDictionary', function (t) {
+  t.equal(typeof utils.asDictionary('test'), 'object', 'should return an object');
+
+  t.deepEqual(
+    utils.asDictionary('test'),
+    {'st ': 1, est: 1, tes: 1, ' te': 1},
+    'should return trigrams'
+  );
+
+  t.deepEqual(
+    utils.asDictionary('te@st'),
+    {' st': 1, ' te': 1, 'e s': 1, 'st ': 1, 'te ': 1},
+    'should return cleaned trigrams (1)'
+  );
+
+  t.deepEqual(
+    utils.asDictionary('\nte\tst '),
+    {' st': 1, ' te': 1, 'e s': 1, 'st ': 1, 'te ': 1},
+    'should return cleaned trigrams (2)'
+  );
+
+  t.deepEqual(
+    utils.asDictionary('testtest'),
+    {' te': 1, est: 2, 'st ': 1, stt: 1, tes: 2, tte: 1},
+    'should count duplicate trigrams'
+  );
+
+  t.end();
+});
+
+test('.asTuples', function (t) {
+  t.ok(Array.isArray(utils.asTuples('test')), 'should return an array');
+  t.equal(utils.asTuples('test').map(s).join(), 'st ;1,est;1,tes;1, te;1', 'should return tuples');
+  t.equal(utils.asTuples('te@st').map(s).join(), 'st ;1, st;1,e s;1,te ;1, te;1', 'should return cleaned trigrams (1)');
+  t.equal(utils.asTuples('\nte\tst ').map(s).join(), 'st ;1, st;1,e s;1,te ;1, te;1', 'should return cleaned trigrams (2)');
+
+  t.equal(
+    utils.asTuples('testtest').map(s).join(),
+    'st ;1,tte;1,stt;1, te;1,est;2,tes;2',
+    'should count duplicate trigrams'
+  );
+
+  t.equal(
+    utils.asTuples('testtest').map(s).join(),
+    'st ;1,tte;1,stt;1, te;1,est;2,tes;2',
+    'should sort trigrams'
+  );
+
+  t.end();
+});
+
+test('.tuplesAsDictionary', function (t) {
+  t.equal(typeof utils.tuplesAsDictionary('test'), 'object', 'should return an object');
+
+  t.deepEqual(
+    utils.tuplesAsDictionary(utils.asTuples('test')),
+    {' te': 1, est: 1, 'st ': 1, tes: 1},
+    'should return tuples as a dictionary'
+  );
+
+  t.deepEqual(
+    utils.tuplesAsDictionary(utils.asTuples('testtest')),
+    {' te': 1, est: 2, 'st ': 1, stt: 1, tes: 2, tte: 1},
+    'should count duplicate trigrams'
+  );
+
+  t.end();
+});
+
+function s(tuple) {
+  return tuple.join(';');
 }
-
-/**
- * Tests.
- */
-
-describe('trigramUtils', function () {
-    it('should be an Object', function () {
-        assert(typeof utils === 'object');
-    });
-});
-
-describe('trigramUtils.clean()', function () {
-    var blacklist;
-
-    blacklist = '!"#$%&\'()*+,-./0123456789:;<=>?@'.split('');
-
-    it('should be a function', function () {
-        assert(typeof utils.clean === 'function');
-    });
-
-    it('should return a string', function () {
-        assert(typeof utils.clean('test') === 'string');
-    });
-
-    it('should accept an empty value', function () {
-        assert(utils.clean() === '');
-        assert(utils.clean(null) === '');
-        assert(utils.clean(undefined) === '');
-    });
-
-    it('should stringify a value', function () {
-        var value,
-            stringified;
-
-        stringified = 'test';
-
-        value = {
-            'toString': function () {
-                return stringified;
-            }
-        };
-
-        assert(utils.clean(value) === stringified);
-    });
-
-    blacklist.forEach(function (character) {
-        it('should remove `' + character + '`', function () {
-            assert(utils.clean(character).indexOf(character) === -1);
-        });
-    });
-
-    it('should concatenate duplicate white space', function () {
-        assert(utils.clean('  ').indexOf('  ') === -1);
-        assert(utils.clean('\n ').indexOf('\n ') === -1);
-        assert(utils.clean(' \t').indexOf('\t ') === -1);
-    });
-
-    it('should trim white space', function () {
-        assert(utils.clean(' alfred ') === 'alfred');
-        assert(utils.clean('\nbertrand ') === 'bertrand');
-        assert(utils.clean(' cees\t\t') === 'cees');
-        assert(utils.clean('\n\n  \t\f\n') === '');
-    });
-
-    it('should lowercase simple uppercase letters', function () {
-        assert(utils.clean('AlFrEd') === 'alfred');
-        assert(utils.clean('BERTRAND') === 'bertrand');
-        assert(utils.clean('Cees') === 'cees');
-    });
-});
-
-describe('trigramUtils.trigrams()', function () {
-    it('should be a function', function () {
-        assert(typeof utils.trigrams === 'function');
-    });
-
-    it('should return an Array', function () {
-        assert(Array.isArray(utils.trigrams('test')));
-    });
-
-    it('should return trigrams', function () {
-        assert(utils.trigrams('test').join('|') === ' te|tes|est|st ');
-    });
-
-    it('should return cleaned trigrams', function () {
-        assert(
-            utils.trigrams('te@st').join('|') ===
-            ' te|te |e s| st|st '
-        );
-
-        assert(
-            utils.trigrams('\nte\tst ').join('|') ===
-            ' te|te |e s| st|st '
-        );
-    });
-});
-
-describe('trigramUtils.asDictionary()', function () {
-    it('should be a function', function () {
-        assert(typeof utils.asDictionary === 'function');
-    });
-
-    it('should return an Object', function () {
-        assert(typeof utils.asDictionary('test') === 'object');
-    });
-
-    it('should return trigrams as a dictionary', function () {
-        var result;
-
-        result = utils.asDictionary('test');
-
-        assert(result[' te'] === 1);
-        assert(result.tes === 1);
-        assert(result.est === 1);
-        assert(result['st '] === 1);
-    });
-
-    it('should return cleaned trigrams', function () {
-        var result;
-
-        result = utils.asDictionary('te@st');
-
-        assert(result[' te'] === 1);
-        assert(result['te '] === 1);
-        assert(result['e s'] === 1);
-        assert(result[' st'] === 1);
-        assert(result['st '] === 1);
-
-        result = utils.asDictionary('\nte\tst ');
-
-        assert(result[' te'] === 1);
-        assert(result['te '] === 1);
-        assert(result['e s'] === 1);
-        assert(result[' st'] === 1);
-        assert(result['st '] === 1);
-    });
-
-    it('should count duplicate trigrams', function () {
-        var result;
-
-        result = utils.asDictionary('testtest');
-
-        assert(result[' te'] === 1);
-        assert(result.tes === 2);
-        assert(result.est === 2);
-        assert(result.stt === 1);
-        assert(result.tte === 1);
-        assert(result['st '] === 1);
-    });
-});
-
-describe('trigramUtils.asTuples()', function () {
-    it('should be a function', function () {
-        assert(typeof utils.asTuples === 'function');
-    });
-
-    it('should return an Array', function () {
-        assert(Array.isArray(utils.asTuples('test')));
-    });
-
-    it('should return trigrams as an array', function () {
-        var result;
-
-        result = joinTuples(utils.asTuples('test'));
-
-        assert(result.indexOf(' te|1') !== -1);
-        assert(result.indexOf('tes|1') !== -1);
-        assert(result.indexOf('est|1') !== -1);
-        assert(result.indexOf('st |1') !== -1);
-        assert(result.length === 4);
-    });
-
-    it('should return cleaned trigrams', function () {
-        var result;
-
-        result = joinTuples(utils.asTuples('te@st'));
-
-        assert(result.indexOf(' te|1') !== -1);
-        assert(result.indexOf('te |1') !== -1);
-        assert(result.indexOf('e s|1') !== -1);
-        assert(result.indexOf(' st|1') !== -1);
-        assert(result.indexOf('st |1') !== -1);
-        assert(result.length === 5);
-
-        result = joinTuples(utils.asTuples('\nte\tst '));
-
-        assert(result.indexOf(' te|1') !== -1);
-        assert(result.indexOf('te |1') !== -1);
-        assert(result.indexOf('e s|1') !== -1);
-        assert(result.indexOf(' st|1') !== -1);
-        assert(result.indexOf('st |1') !== -1);
-        assert(result.length === 5);
-    });
-
-    it('should count duplicate trigrams', function () {
-        var result;
-
-        result = joinTuples(utils.asTuples('testtest'));
-
-        assert(result.indexOf(' te|1') !== -1);
-        assert(result.indexOf('tes|2') !== -1);
-        assert(result.indexOf('est|2') !== -1);
-        assert(result.indexOf('stt|1') !== -1);
-        assert(result.indexOf('tte|1') !== -1);
-        assert(result.indexOf('st |1') !== -1);
-        assert(result.length === 6);
-    });
-
-    it('should sort trigrams', function () {
-        var result;
-
-        result = joinTuples(utils.asTuples('testtest'));
-
-        assert(result.indexOf(' te|1') < 4);
-        assert(result.indexOf('stt|1') < 4);
-        assert(result.indexOf('tte|1') < 4);
-        assert(result.indexOf('st |1') < 4);
-        assert(result.indexOf('tes|2') >= 4);
-        assert(result.indexOf('est|2') >= 4);
-    });
-});
-
-describe('trigramUtils.tuplesAsDictionary()', function () {
-    it('should be a function', function () {
-        assert(typeof utils.tuplesAsDictionary === 'function');
-    });
-
-    it('should return an Object', function () {
-        assert(typeof utils.tuplesAsDictionary(['abc', 1]) === 'object');
-    });
-
-    it('should return tuples as a dictionary', function () {
-        var tuples,
-            result;
-
-        tuples = [[' te', 1], ['tes', 1], ['est', 1], ['st ', 1]];
-
-        result = utils.tuplesAsDictionary(tuples);
-
-        assert(result[' te'] === 1);
-        assert(result.tes === 1);
-        assert(result.est === 1);
-        assert(result['st '] === 1);
-    });
-
-    it('should correctly handle counts', function () {
-        var tuples,
-            result;
-
-        tuples = [[' te', 1], ['tes', 1], ['est', 1], ['st ', 1]];
-
-        result = utils.tuplesAsDictionary(tuples);
-
-        assert(result[' te'] === 1);
-        assert(result.tes === 1);
-        assert(result.est === 1);
-        assert(result['st '] === 1);
-    });
-
-    it('should count duplicate trigrams', function () {
-        var tuples,
-            result;
-
-        tuples = [
-            ['st ', 1],
-            ['tte', 1],
-            ['stt', 1],
-            [' te', 1],
-            ['est', 2],
-            ['tes', 2]
-        ];
-
-        result = utils.tuplesAsDictionary(tuples);
-
-        assert(result[' te'] === 1);
-        assert(result.tes === 2);
-        assert(result.est === 2);
-        assert(result.stt === 1);
-        assert(result.tte === 1);
-        assert(result['st '] === 1);
-    });
-});

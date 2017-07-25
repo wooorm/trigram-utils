@@ -1,7 +1,7 @@
 {
   "name": "trigram-utils",
   "version": "0.1.1",
-  "description": "Few language trigram utility functions",
+  "description": "A few language trigram utilities",
   "license": "MIT",
   "keywords": [
     "trigram",
@@ -9,28 +9,58 @@
     "language",
     "utilities"
   ],
+  "repository": "https://github.com/wooorm/trigram-utils",
+  "bugs": "https://github.com/wooorm/trigram-utils/issues",
+  "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
+  "contributors": [
+    "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)"
+  ],
+  "files": [
+    "index.js"
+  ],
   "dependencies": {
-    "n-gram": "^0.1.0"
+    "collapse-white-space": "^1.0.3",
+    "n-gram": "^0.1.0",
+    "trim": "0.0.1"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/wooorm/trigram-utils.git"
-  },
-  "author": "Titus Wormer <tituswormer@gmail.com>",
   "devDependencies": {
-    "eslint": "^0.10.0",
-    "istanbul": "^0.3.0",
-    "jscs": "^1.0.0",
-    "mocha": "^2.0.0"
+    "browserify": "^14.0.0",
+    "esmangle": "^1.0.0",
+    "nyc": "^11.0.0",
+    "remark-cli": "^3.0.0",
+    "remark-preset-wooorm": "^3.0.0",
+    "tape": "^4.0.0",
+    "xo": "^0.18.0"
   },
   "scripts": {
-    "test": "node_modules/.bin/_mocha --reporter spec --check-leaks -u exports test.js",
-    "test-travis": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha --report lcovonly -- --reporter spec --check-leaks -u exports test.js",
-    "coverage": "node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- -- test.js",
-    "lint-api": "node_modules/.bin/eslint index.js",
-    "lint-test": "node_modules/.bin/eslint test.js --env mocha",
-    "lint-style": "node_modules/.bin/jscs index.js test.js --reporter=inline",
-    "lint": "npm run lint-api && npm run lint-test && npm run lint-style",
-    "make": "npm run lint && npm run coverage"
+    "build-md": "remark . -qfo",
+    "build-bundle": "browserify index.js --bare -s trigramUtils > trigram-utils.js",
+    "build-mangle": "esmangle trigram-utils.js > trigram-utils.min.js",
+    "build": "npm run build-md && npm run build-bundle && npm run build-mangle",
+    "lint": "xo",
+    "test-api": "node test",
+    "test-coverage": "nyc --reporter lcov tape test.js",
+    "test": "npm run build && npm run lint && npm run test-coverage"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "lines": 100,
+    "functions": 100,
+    "branches": 100
+  },
+  "xo": {
+    "space": true,
+    "esnext": false,
+    "rules": {
+      "guard-for-in": "off"
+    },
+    "ignores": [
+      "trigram-utils.js"
+    ]
+  },
+  "remarkConfig": {
+    "plugins": [
+      "preset-wooorm"
+    ]
   }
 }

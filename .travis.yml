@@ -1,13 +1,22 @@
 language: node_js
-script: npm run-script test-travis
 node_js:
-- '0.10'
-- '0.11'
-after_script: npm install coveralls@2.10.0 && cat ./coverage/lcov.info | coveralls
+- '4.0'
+- '8.0'
+after_script: bash <(curl -s https://codecov.io/bash)
 deploy:
-  provider: npm
-  email: tituswormer@gmail.com
-  api_key:
-    secure: X/sPn26Wc8o8/NZ3GT3RwhAMGPFCSJ74aM7OSeNZyrVZW14Zw6edbSm6y6+R4A++7suh+27+0EONRY/aibIpavbCzvJCR6uCF+Jjoo9jRT3WBmx6oDI7CL9cm/0SiYvvBR4n7wmG2VdaFeh4ulP/3fd6NvtNeTh083OkFc5LSDI=
-  on:
-    repo: wooorm/trigram-utils
+  - provider: npm
+    email: tituswormer@gmail.com
+    api_key:
+      secure: Mv/7/oYjB9H9G/WL2lTaCZ3+qq2NXBdNtKTeZsrw8qDI4taGqYkq91CCbwRdBe+rH+pyQL++aKEBPlb3yx8liAklXWpPMlav/VYzcNMb3DsaJg9YN/q0qdrmhNQ2nj0NFlFoTR7/HoQzwB61bI2upCFDG1zfmKpLca4hjseQML8=
+    on:
+      tags: true
+      node: '8.0'
+  - provider: releases
+    api_key:
+      secure: VCUx8OF+mGbR3bWqlaSXWOq2zsLjnfYowCgRPxfX0sOPWtzVmVW+8hKz323Qx8/yfkebulJzQ1p1Up3iZoqTwoxH3va0FUz2EnFwUZx2Mu93CHS4soF7b2vLEpCXlB8TCkq+Ywdp2I3oFJP+2vrxEpAv0oQddeWEqx086hvoRvk=
+    file:
+      - "trigram-utils.js"
+      - "trigram-utils.min.js"
+    on:
+      tags: true
+      node: '8.0'
