@@ -90,7 +90,7 @@ Transform an `Array` of trigram–occurrence tuples (as returned by
 
 [franc]: https://github.com/wooorm/franc
 
-[n-gram]: https://github.com/wooorm/n-gram
+[n-gram]: https://github.com/words/n-gram
 
 [as-tuples]: #utilsastuplesvalue
 
