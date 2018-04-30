@@ -9,7 +9,7 @@
     "language",
     "utilities"
   ],
-  "repository": "https://github.com/wooorm/trigram-utils",
+  "repository": "wooorm/trigram-utils",
   "bugs": "https://github.com/wooorm/trigram-utils/issues",
   "author": "Titus Wormer <tituswormer@gmail.com> (http://wooorm.com)",
   "contributors": [
