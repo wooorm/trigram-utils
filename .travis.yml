@@ -1,10 +1,11 @@
 language: node_js
 node_js:
-- '4.0'
-- '8.0'
+- lts/boron
+- node
 after_script: bash <(curl -s https://codecov.io/bash)
 deploy:
   provider: releases
+  skip_clenaup: true
   api_key:
     secure: VCUx8OF+mGbR3bWqlaSXWOq2zsLjnfYowCgRPxfX0sOPWtzVmVW+8hKz323Qx8/yfkebulJzQ1p1Up3iZoqTwoxH3va0FUz2EnFwUZx2Mu93CHS4soF7b2vLEpCXlB8TCkq+Ywdp2I3oFJP+2vrxEpAv0oQddeWEqx086hvoRvk=
   file:
@@ -12,4 +13,3 @@ deploy:
     - "trigram-utils.min.js"
   on:
     tags: true
-    node: '8.0'
