@@ -1,7 +1,7 @@
 'use strict';
 
 var test = require('tape');
-var utils = require('./');
+var utils = require('.');
 
 test('.clean', function (t) {
   var blacklist = '!"#$%&\'()*+,-./0123456789:;<=>?@'.split('');
