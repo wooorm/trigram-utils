@@ -16,18 +16,18 @@ npm install trigram-utils
 ## Usage
 
 ```js
-var utils = require('trigram-utils');
+var utils = require('trigram-utils')
 
-utils.clean(' t@rololol '); //=> 't rololol'
+utils.clean(' t@rololol ') // => 't rololol'
 
-utils.trigrams(' t@rololol ');
-//=> [ ' t ', 't r', ' ro', 'rol', 'olo', 'lol', 'olo', 'lol', 'ol ' ]
+utils.trigrams(' t@rololol ')
+// => [ ' t ', 't r', ' ro', 'rol', 'olo', 'lol', 'olo', 'lol', 'ol ' ]
 
-utils.asDictionary(' t@rololol ');
-//=> { 'ol ': 1, lol: 2, olo: 2, rol: 1, ' ro': 1, 't r': 1, ' t ': 1 }
+utils.asDictionary(' t@rololol ')
+// => { 'ol ': 1, lol: 2, olo: 2, rol: 1, ' ro': 1, 't r': 1, ' t ': 1 }
 
-var tuples = utils.asTuples(' t@rololol ');
-//=> [ [ 'ol ', 1 ],
+var tuples = utils.asTuples(' t@rololol ')
+// => [ [ 'ol ', 1 ],
 //     [ 'rol', 1 ],
 //     [ ' ro', 1 ],
 //     [ 't r', 1 ],
@@ -35,8 +35,8 @@ var tuples = utils.asTuples(' t@rololol ');
 //     [ 'lol', 2 ],
 //     [ 'olo', 2 ] ]
 
-utils.tuplesAsDictionary(tuples);
-//=> { olo: 2, lol: 2, ' t ': 1, 't r': 1, ' ro': 1, rol: 1, 'ol ': 1 }
+utils.tuplesAsDictionary(tuples)
+// => { olo: 2, lol: 2, ' t ': 1, 't r': 1, ' ro': 1, rol: 1, 'ol ': 1 }
 ```
 
 ## API
