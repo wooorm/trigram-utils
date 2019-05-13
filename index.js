@@ -12,9 +12,9 @@ exports.asDictionary = getCleanTrigramsAsDictionary
 exports.asTuples = getCleanTrigramsAsTuples
 exports.tuplesAsDictionary = getCleanTrigramTuplesAsDictionary
 
-/* Clean `value`
- * Removed general non-important (as in, for language detection) punctuation
- * marks, symbols, and numbers. */
+// Clean `value`/
+// Removed general non-important (as in, for language detection) punctuation
+// marks, symbols, and numbers.
 function clean(value) {
   if (value === null || value === undefined) {
     return ''
@@ -25,13 +25,13 @@ function clean(value) {
   ).toLowerCase()
 }
 
-/* Get clean, padded, trigrams. */
+// Get clean, padded, trigrams.
 function getCleanTrigrams(value) {
   return trigram(' ' + clean(value) + ' ')
 }
 
-/* Get an `Object` with trigrams as its attributes, and
- * their occurence count as their values. */
+// Get an `Object` with trigrams as its attributes, and their occurence count as
+// their values.
 function getCleanTrigramsAsDictionary(value) {
   var trigrams = getCleanTrigrams(value)
   var index = trigrams.length
@@ -51,8 +51,7 @@ function getCleanTrigramsAsDictionary(value) {
   return dictionary
 }
 
-/* Get an `Array` containing trigram--count tuples from a
- * given value. */
+// Get an `Array` containing trigram--count tuples from a given value.
 function getCleanTrigramsAsTuples(value) {
   var dictionary = getCleanTrigramsAsDictionary(value)
   var tuples = []
@@ -67,8 +66,7 @@ function getCleanTrigramsAsTuples(value) {
   return tuples
 }
 
-/* Get an `Array` containing trigram--count tuples from a
- * given value. */
+// Get an `Array` containing trigram--count tuples from a given value.
 function getCleanTrigramTuplesAsDictionary(tuples) {
   var index = tuples.length
   var dictionary = {}
@@ -82,7 +80,7 @@ function getCleanTrigramTuplesAsDictionary(tuples) {
   return dictionary
 }
 
-/* Deep regular sort on item at `1` in both `Object`s. */
+// Deep regular sort on item at `1` in both `Object`s.
 function sort(a, b) {
   return a[1] - b[1]
 }
