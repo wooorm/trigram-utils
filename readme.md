@@ -84,7 +84,7 @@ Transform an `Array` of trigram–occurrence tuples (as returned by
 
 [license]: license
 
-[author]: http://wooorm.com
+[author]: https://wooorm.com
 
 [trigrams]: https://github.com/wooorm/trigrams
 
