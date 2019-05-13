@@ -1,4 +1,9 @@
-# trigram-utils [![Build Status][travis-badge]][travis] [![Coverage Status][codecov-badge]][codecov]
+# trigram-utils
+
+[![Build][build-badge]][build]
+[![Coverage][coverage-badge]][coverage]
+[![Downloads][downloads-badge]][downloads]
+[![Size][size-badge]][size]
 
 Trigram language statistics utility functions, in their own repository to make
 sure [`trigrams`][trigrams] (trigram info for the Universal Declaration of
@@ -72,13 +77,21 @@ Transform an `Array` of trigram–occurrence tuples (as returned by
 
 <!-- Definitions -->
 
-[travis-badge]: https://img.shields.io/travis/wooorm/trigram-utils.svg
+[build-badge]: https://img.shields.io/travis/wooorm/trigram-utils.svg
 
-[travis]: https://travis-ci.org/wooorm/trigram-utils
+[build]: https://travis-ci.org/wooorm/trigram-utils
 
-[codecov-badge]: https://img.shields.io/codecov/c/github/wooorm/trigram-utils.svg
+[coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/trigram-utils.svg
 
-[codecov]: https://codecov.io/github/wooorm/trigram-utils
+[coverage]: https://codecov.io/github/wooorm/trigram-utils
+
+[downloads-badge]: https://img.shields.io/npm/dm/trigram-utils.svg
+
+[downloads]: https://www.npmjs.com/package/trigram-utils
+
+[size-badge]: https://img.shields.io/bundlephobia/minzip/trigram-utils.svg
+
+[size]: https://bundlephobia.com/result?p=trigram-utils
 
 [npm]: https://docs.npmjs.com/cli/install
 
