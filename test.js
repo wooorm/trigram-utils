@@ -4,14 +4,14 @@ var test = require('tape')
 var utils = require('.')
 
 test('.clean', function(t) {
-  var blacklist = '!"#$%&\'()*+,-./0123456789:;<=>?@'.split('')
+  var ignore = '!"#$%&\'()*+,-./0123456789:;<=>?@'.split('')
 
   t.equal(typeof utils.clean('test'), 'string', 'should return a string')
   t.equal(utils.clean(), '', 'should accept a missing value')
   t.equal(utils.clean(null), '', 'should accept `null`')
   t.equal(utils.clean(undefined), '', 'should accept `undefined`')
 
-  blacklist.forEach(function(character) {
+  ignore.forEach(function(character) {
     t.equal(utils.clean(character), '', 'should remove `' + character + '`')
   })
 
