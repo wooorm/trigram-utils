@@ -1,4 +1,4 @@
-# trigram-utils
+# `trigram-utils`
 
 [![Build][build-badge]][build]
 [![Coverage][coverage-badge]][coverage]
@@ -6,19 +6,19 @@
 [![Size][size-badge]][size]
 
 Trigram language statistics utility functions, in their own repository to make
-sure [`trigrams`][trigrams] (trigram info for the Universal Declaration of
-Human Rights) and [`franc`][franc] (language detection) use the same cleaning
+sure [`trigrams`][trigrams] (trigram info for the universal declaration of
+human rights) and [`franc`][franc] (language detection) use the same cleaning
 and classification methods.
 
-## Installation
+## Install
 
 [npm][]:
 
-```bash
+```sh
 npm install trigram-utils
 ```
 
-## Usage
+## Use
 
 ```js
 var utils = require('trigram-utils')
@@ -49,7 +49,8 @@ utils.tuplesAsDictionary(tuples)
 ### `utils.clean(value)`
 
 Clean a given string: strips some (for language detection) useless punctuation,
-symbols, and numbers.  Collapses white space, trims, and lowercases.
+symbols, and numbers.
+Collapses white space, trims, and lowercases.
 
 ### `utils.trigrams(value)`
 
