@@ -1,13 +1,13 @@
 import {trigram} from 'n-gram'
 import {collapseWhiteSpace} from 'collapse-white-space'
 
-var own = {}.hasOwnProperty
-
 /**
  * @typedef {[string, number]} TrigramTuple
  * @typedef {TrigramTuple[]} TrigramTuples
  * @typedef {Object.<string, number>} TrigramDictionary
  */
+
+var own = {}.hasOwnProperty
 
 /**
  * Clean `value`.
@@ -75,7 +75,9 @@ export function asTuples(value) {
   var trigram
 
   for (trigram in dictionary) {
-    tuples.push([trigram, dictionary[trigram]])
+    if (own.call(dictionary, trigram)) {
+      tuples.push([trigram, dictionary[trigram]])
+    }
   }
 
   tuples.sort(sort)
