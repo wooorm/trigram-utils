@@ -78,9 +78,9 @@ Transform an `Array` of trigram–occurrence tuples (as returned by
 
 <!-- Definitions -->
 
-[build-badge]: https://img.shields.io/travis/wooorm/trigram-utils.svg
+[build-badge]: https://github.com/wooorm/trigram-utils/workflows/main/badge.svg
 
-[build]: https://travis-ci.org/wooorm/trigram-utils
+[build]: https://github.com/wooorm/trigram-utils/actions
 
 [coverage-badge]: https://img.shields.io/codecov/c/github/wooorm/trigram-utils.svg
 
