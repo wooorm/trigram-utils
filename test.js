@@ -3,17 +3,22 @@
 var test = require('tape')
 var utils = require('.')
 
-test('.clean', function(t) {
-  var ignore = '!"#$%&\'()*+,-./0123456789:;<=>?@'.split('')
+test('.clean', function (t) {
+  var ignore = '!"#$%&\'()*+,-./0123456789:;<=>?@'
+  var index = -1
 
   t.equal(typeof utils.clean('test'), 'string', 'should return a string')
   t.equal(utils.clean(), '', 'should accept a missing value')
   t.equal(utils.clean(null), '', 'should accept `null`')
   t.equal(utils.clean(undefined), '', 'should accept `undefined`')
 
-  ignore.forEach(function(character) {
-    t.equal(utils.clean(character), '', 'should remove `' + character + '`')
-  })
+  while (++index < ignore.length) {
+    t.equal(
+      utils.clean(ignore.charAt(index)),
+      '',
+      'should remove `' + ignore.charAt(index) + '`'
+    )
+  }
 
   t.equal(utils.clean('a  b'), 'a b', 'should collapse multiple spaces to one')
   t.equal(
@@ -39,7 +44,7 @@ test('.clean', function(t) {
   t.end()
 })
 
-test('.trigrams', function(t) {
+test('.trigrams', function (t) {
   t.ok(Array.isArray(utils.trigrams('test')), 'should return an array')
   t.equal(
     utils.trigrams('test').join(),
@@ -59,7 +64,7 @@ test('.trigrams', function(t) {
   t.end()
 })
 
-test('.asDictionary', function(t) {
+test('.asDictionary', function (t) {
   t.equal(
     typeof utils.asDictionary('test'),
     'object',
@@ -93,12 +98,12 @@ test('.asDictionary', function(t) {
   t.end()
 })
 
-test('.asTuples', function(t) {
+test('.asTuples', function (t) {
   t.ok(Array.isArray(utils.asTuples('test')), 'should return an array')
   t.equal(
     utils
       .asTuples('test')
-      .map(s)
+      .map((d) => d.join(';'))
       .join(),
     'st ;1,est;1,tes;1, te;1',
     'should return tuples'
@@ -106,7 +111,7 @@ test('.asTuples', function(t) {
   t.equal(
     utils
       .asTuples('te@st')
-      .map(s)
+      .map((d) => d.join(';'))
       .join(),
     'st ;1, st;1,e s;1,te ;1, te;1',
     'should return cleaned trigrams (1)'
@@ -114,7 +119,7 @@ test('.asTuples', function(t) {
   t.equal(
     utils
       .asTuples('\nte\tst ')
-      .map(s)
+      .map((d) => d.join(';'))
       .join(),
     'st ;1, st;1,e s;1,te ;1, te;1',
     'should return cleaned trigrams (2)'
@@ -123,7 +128,7 @@ test('.asTuples', function(t) {
   t.equal(
     utils
       .asTuples('testtest')
-      .map(s)
+      .map((d) => d.join(';'))
       .join(),
     'st ;1,tte;1,stt;1, te;1,est;2,tes;2',
     'should count duplicate trigrams'
@@ -132,7 +137,7 @@ test('.asTuples', function(t) {
   t.equal(
     utils
       .asTuples('testtest')
-      .map(s)
+      .map((d) => d.join(';'))
       .join(),
     'st ;1,tte;1,stt;1, te;1,est;2,tes;2',
     'should sort trigrams'
@@ -141,7 +146,7 @@ test('.asTuples', function(t) {
   t.end()
 })
 
-test('.tuplesAsDictionary', function(t) {
+test('.tuplesAsDictionary', function (t) {
   t.equal(
     typeof utils.tuplesAsDictionary('test'),
     'object',
@@ -162,7 +167,3 @@ test('.tuplesAsDictionary', function(t) {
 
   t.end()
 })
-
-function s(tuple) {
-  return tuple.join(';')
-}
