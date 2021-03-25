@@ -1,63 +1,59 @@
-'use strict'
-
-var test = require('tape')
-var utils = require('.')
+import test from 'tape'
+import {
+  clean,
+  trigrams,
+  asDictionary,
+  asTuples,
+  tuplesAsDictionary
+} from './index.js'
 
 test('.clean', function (t) {
   var ignore = '!"#$%&\'()*+,-./0123456789:;<=>?@'
   var index = -1
 
-  t.equal(typeof utils.clean('test'), 'string', 'should return a string')
-  t.equal(utils.clean(), '', 'should accept a missing value')
-  t.equal(utils.clean(null), '', 'should accept `null`')
-  t.equal(utils.clean(undefined), '', 'should accept `undefined`')
+  t.equal(typeof clean('test'), 'string', 'should return a string')
+  t.equal(clean(), '', 'should accept a missing value')
+  t.equal(clean(null), '', 'should accept `null`')
+  t.equal(clean(undefined), '', 'should accept `undefined`')
 
   while (++index < ignore.length) {
     t.equal(
-      utils.clean(ignore.charAt(index)),
+      clean(ignore.charAt(index)),
       '',
       'should remove `' + ignore.charAt(index) + '`'
     )
   }
 
-  t.equal(utils.clean('a  b'), 'a b', 'should collapse multiple spaces to one')
+  t.equal(clean('a  b'), 'a b', 'should collapse multiple spaces to one')
   t.equal(
-    utils.clean('a\n b'),
+    clean('a\n b'),
     'a b',
     'should collapse newlines and spaces to a space'
   )
-  t.equal(
-    utils.clean('a \tb'),
-    'a b',
-    'should collapse tabs and spaces to a space'
-  )
+  t.equal(clean('a \tb'), 'a b', 'should collapse tabs and spaces to a space')
 
-  t.equal(utils.clean('\n\ta'), 'a', 'should trim initial white-space')
-  t.equal(utils.clean('a \f'), 'a', 'should trim final white-space')
-  t.equal(utils.clean('\ta \f'), 'a', 'should trim surrounding white-space')
-  t.equal(utils.clean('\t\n \f'), '', 'should trim white-space only input')
+  t.equal(clean('\n\ta'), 'a', 'should trim initial white-space')
+  t.equal(clean('a \f'), 'a', 'should trim final white-space')
+  t.equal(clean('\ta \f'), 'a', 'should trim surrounding white-space')
+  t.equal(clean('\t\n \f'), '', 'should trim white-space only input')
 
-  t.equal(utils.clean('AlPHA'), 'alpha', 'should lowercase mixed-case')
-  t.equal(utils.clean('BRAVO'), 'bravo', 'should lowercase uppercase')
-  t.equal(utils.clean('Charlie'), 'charlie', 'should lowercase sentence-case')
+  t.equal(clean('AlPHA'), 'alpha', 'should lowercase mixed-case')
+  t.equal(clean('BRAVO'), 'bravo', 'should lowercase uppercase')
+  t.equal(clean('Charlie'), 'charlie', 'should lowercase sentence-case')
 
   t.end()
 })
 
 test('.trigrams', function (t) {
-  t.ok(Array.isArray(utils.trigrams('test')), 'should return an array')
+  t.ok(Array.isArray(trigrams('test')), 'should return an array')
+  t.equal(trigrams('test').join(), ' te,tes,est,st ', 'should return trigrams')
   t.equal(
-    utils.trigrams('test').join(),
-    ' te,tes,est,st ',
-    'should return trigrams'
-  )
-  t.equal(
-    utils.trigrams('te@st').join(),
+    trigrams('te@st').join(),
     ' te,te ,e s, st,st ',
     'should return cleaned trigrams (1)'
   )
   t.equal(
-    utils.trigrams('\nte\tst ').join(),
+    trigrams('\nte\tst ').join(),
     ' te,te ,e s, st,st ',
     'should return cleaned trigrams (2)'
   )
@@ -65,32 +61,28 @@ test('.trigrams', function (t) {
 })
 
 test('.asDictionary', function (t) {
-  t.equal(
-    typeof utils.asDictionary('test'),
-    'object',
-    'should return an object'
-  )
+  t.equal(typeof asDictionary('test'), 'object', 'should return an object')
 
   t.deepEqual(
-    utils.asDictionary('test'),
+    asDictionary('test'),
     {'st ': 1, est: 1, tes: 1, ' te': 1},
     'should return trigrams'
   )
 
   t.deepEqual(
-    utils.asDictionary('te@st'),
+    asDictionary('te@st'),
     {' st': 1, ' te': 1, 'e s': 1, 'st ': 1, 'te ': 1},
     'should return cleaned trigrams (1)'
   )
 
   t.deepEqual(
-    utils.asDictionary('\nte\tst '),
+    asDictionary('\nte\tst '),
     {' st': 1, ' te': 1, 'e s': 1, 'st ': 1, 'te ': 1},
     'should return cleaned trigrams (2)'
   )
 
   t.deepEqual(
-    utils.asDictionary('testtest'),
+    asDictionary('testtest'),
     {' te': 1, est: 2, 'st ': 1, stt: 1, tes: 2, tte: 1},
     'should count duplicate trigrams'
   )
@@ -99,47 +91,42 @@ test('.asDictionary', function (t) {
 })
 
 test('.asTuples', function (t) {
-  t.ok(Array.isArray(utils.asTuples('test')), 'should return an array')
+  t.ok(Array.isArray(asTuples('test')), 'should return an array')
   t.equal(
-    utils
-      .asTuples('test')
+    asTuples('test')
       .map((d) => d.join(';'))
       .join(),
-    'st ;1,est;1,tes;1, te;1',
+    ' te;1,tes;1,est;1,st ;1',
     'should return tuples'
   )
   t.equal(
-    utils
-      .asTuples('te@st')
+    asTuples('te@st')
       .map((d) => d.join(';'))
       .join(),
-    'st ;1, st;1,e s;1,te ;1, te;1',
+    ' te;1,te ;1,e s;1, st;1,st ;1',
     'should return cleaned trigrams (1)'
   )
   t.equal(
-    utils
-      .asTuples('\nte\tst ')
+    asTuples('\nte\tst ')
       .map((d) => d.join(';'))
       .join(),
-    'st ;1, st;1,e s;1,te ;1, te;1',
+    ' te;1,te ;1,e s;1, st;1,st ;1',
     'should return cleaned trigrams (2)'
   )
 
   t.equal(
-    utils
-      .asTuples('testtest')
+    asTuples('testtest')
       .map((d) => d.join(';'))
       .join(),
-    'st ;1,tte;1,stt;1, te;1,est;2,tes;2',
+    ' te;1,stt;1,tte;1,st ;1,tes;2,est;2',
     'should count duplicate trigrams'
   )
 
   t.equal(
-    utils
-      .asTuples('testtest')
+    asTuples('testtest')
       .map((d) => d.join(';'))
       .join(),
-    'st ;1,tte;1,stt;1, te;1,est;2,tes;2',
+    ' te;1,stt;1,tte;1,st ;1,tes;2,est;2',
     'should sort trigrams'
   )
 
@@ -148,19 +135,19 @@ test('.asTuples', function (t) {
 
 test('.tuplesAsDictionary', function (t) {
   t.equal(
-    typeof utils.tuplesAsDictionary('test'),
+    typeof tuplesAsDictionary('test'),
     'object',
     'should return an object'
   )
 
   t.deepEqual(
-    utils.tuplesAsDictionary(utils.asTuples('test')),
+    tuplesAsDictionary(asTuples('test')),
     {' te': 1, est: 1, 'st ': 1, tes: 1},
     'should return tuples as a dictionary'
   )
 
   t.deepEqual(
-    utils.tuplesAsDictionary(utils.asTuples('testtest')),
+    tuplesAsDictionary(asTuples('testtest')),
     {' te': 1, est: 2, 'st ': 1, stt: 1, tes: 2, tte: 1},
     'should count duplicate trigrams'
   )

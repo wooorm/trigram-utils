@@ -12,6 +12,9 @@ and classification methods.
 
 ## Install
 
+This package is ESM only: Node 12+ is needed to use it and it must be `import`ed
+instead of `require`d.
+
 [npm][]:
 
 ```sh
@@ -21,52 +24,58 @@ npm install trigram-utils
 ## Use
 
 ```js
-var utils = require('trigram-utils')
+import {clean, trigrams, asDictionary, asTuples, tuplesAsDictionary} from 'trigram-utils'
 
-utils.clean(' t@rololol ') // => 't rololol'
+clean(' t@rololol ') // => 't rololol'
 
-utils.trigrams(' t@rololol ')
-// => [ ' t ', 't r', ' ro', 'rol', 'olo', 'lol', 'olo', 'lol', 'ol ' ]
+trigrams(' t@rololol ')
+// => [' t ', 't r', ' ro', 'rol', 'olo', 'lol', 'olo', 'lol', 'ol ']
 
-utils.asDictionary(' t@rololol ')
-// => { 'ol ': 1, lol: 2, olo: 2, rol: 1, ' ro': 1, 't r': 1, ' t ': 1 }
+asDictionary(' t@rololol ')
+// => {'ol ': 1, lol: 2, olo: 2, rol: 1, ' ro': 1, 't r': 1, ' t ': 1}
 
-var tuples = utils.asTuples(' t@rololol ')
-// => [ [ 'ol ', 1 ],
-//     [ 'rol', 1 ],
-//     [ ' ro', 1 ],
-//     [ 't r', 1 ],
-//     [ ' t ', 1 ],
-//     [ 'lol', 2 ],
-//     [ 'olo', 2 ] ]
+var tuples = asTuples(' t@rololol ')
+// => [
+//   ['ol ', 1],
+//   ['rol', 1],
+//   [' ro', 1],
+//   ['t r', 1],
+//   [' t ', 1],
+//   ['lol', 2],
+//   ['olo', 2]
+// ]
 
-utils.tuplesAsDictionary(tuples)
-// => { olo: 2, lol: 2, ' t ': 1, 't r': 1, ' ro': 1, rol: 1, 'ol ': 1 }
+tuplesAsDictionary(tuples)
+// => {olo: 2, lol: 2, ' t ': 1, 't r': 1, ' ro': 1, rol: 1, 'ol ': 1}
 ```
 
 ## API
 
-### `utils.clean(value)`
+This package exports the following identifiers: `clean`, `trigrams`,
+`asDictionary`, `asTuples`, tuplesAsDictionary.
+There is no default export.
+
+### `clean(value)`
 
 Clean a given string: strips some (for language detection) useless punctuation,
 symbols, and numbers.
 Collapses white space, trims, and lowercases.
 
-### `utils.trigrams(value)`
+### `trigrams(value)`
 
 Get clean, padded trigrams (see [`n-gram`][n-gram]).
 
-### `utils.asDictionary(value)`
+### `asDictionary(value)`
 
 Get clean trigrams as a dictionary: keys are trigrams, values are occurrence
 counts.
 
-### `utils.asTuples(value)`
+### `asTuples(value)`
 
 Get clean trigrams with occurrence counts as a tuple: first index (`0`) the
 trigram, second (`1`) the occurrence count.
 
-### `utils.tuplesAsDictionary(tuples)`
+### `tuplesAsDictionary(tuples)`
 
 Transform an `Array` of trigram–occurrence tuples (as returned by
 [`asTuples()`][as-tuples]) as a dictionary (as returned by
@@ -106,6 +115,6 @@ Transform an `Array` of trigram–occurrence tuples (as returned by
 
 [n-gram]: https://github.com/words/n-gram
 
-[as-tuples]: #utilsastuplesvalue
+[as-tuples]: #astuplesvalue
 
-[as-dictionary]: #utilsasdictionaryvalue
+[as-dictionary]: #asdictionaryvalue

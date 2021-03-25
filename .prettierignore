@@ -1,5 +1,2 @@
-.nyc_output/
 coverage/
-trigram-utils.js
-trigram-utils.min.js
 *.md

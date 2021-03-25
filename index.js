@@ -1,49 +1,38 @@
-'use strict'
+import {trigram} from 'n-gram'
+import {collapseWhiteSpace} from 'collapse-white-space'
 
-var trigram = require('n-gram').trigram
-var collapse = require('collapse-white-space')
+var own = {}.hasOwnProperty
 
-var has = {}.hasOwnProperty
-
-exports.clean = clean
-exports.trigrams = getCleanTrigrams
-exports.asDictionary = getCleanTrigramsAsDictionary
-exports.asTuples = getCleanTrigramsAsTuples
-exports.tuplesAsDictionary = getCleanTrigramTuplesAsDictionary
-
-// Clean `value`/
+// Clean `value`.
 // Removed general non-important (as in, for language detection) punctuation
-// marks, symbols, and numbers.
-function clean(value) {
+// marks, symbols, and digits.
+export function clean(value) {
   if (value === null || value === undefined) {
     return ''
   }
 
-  return collapse(String(value).replace(/[\u0021-\u0040]+/g, ' '))
+  return collapseWhiteSpace(String(value).replace(/[\u0021-\u0040]+/g, ' '))
     .trim()
     .toLowerCase()
 }
 
 // Get clean, padded, trigrams.
-function getCleanTrigrams(value) {
+export function trigrams(value) {
   return trigram(' ' + clean(value) + ' ')
 }
 
 // Get an `Object` with trigrams as its attributes, and their occurence count as
 // their values.
-function getCleanTrigramsAsDictionary(value) {
-  var trigrams = getCleanTrigrams(value)
-  var index = trigrams.length
+export function asDictionary(value) {
+  var values = trigrams(value)
   var dictionary = {}
-  var trigram
+  var index = -1
 
-  while (index--) {
-    trigram = trigrams[index]
-
-    if (has.call(dictionary, trigram)) {
-      dictionary[trigram]++
+  while (++index < values.length) {
+    if (own.call(dictionary, values[index])) {
+      dictionary[values[index]]++
     } else {
-      dictionary[trigram] = 1
+      dictionary[values[index]] = 1
     }
   }
 
@@ -51,8 +40,8 @@ function getCleanTrigramsAsDictionary(value) {
 }
 
 // Get an `Array` containing trigram--count tuples from a given value.
-function getCleanTrigramsAsTuples(value) {
-  var dictionary = getCleanTrigramsAsDictionary(value)
+export function asTuples(value) {
+  var dictionary = asDictionary(value)
   var tuples = []
   var trigram
 
@@ -66,14 +55,12 @@ function getCleanTrigramsAsTuples(value) {
 }
 
 // Get an `Array` containing trigram--count tuples from a given value.
-function getCleanTrigramTuplesAsDictionary(tuples) {
-  var index = tuples.length
+export function tuplesAsDictionary(tuples) {
   var dictionary = {}
-  var tuple
+  var index = -1
 
-  while (index--) {
-    tuple = tuples[index]
-    dictionary[tuple[0]] = tuple[1]
+  while (++index < tuples.length) {
+    dictionary[tuples[index][0]] = tuples[index][1]
   }
 
   return dictionary
