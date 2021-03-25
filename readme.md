@@ -1,4 +1,4 @@
-# `trigram-utils`
+# trigram-utils
 
 [![Build][build-badge]][build]
 [![Coverage][coverage-badge]][coverage]
@@ -52,7 +52,7 @@ tuplesAsDictionary(tuples)
 ## API
 
 This package exports the following identifiers: `clean`, `trigrams`,
-`asDictionary`, `asTuples`, tuplesAsDictionary.
+`asDictionary`, `asTuples`, `tuplesAsDictionary`.
 There is no default export.
 
 ### `clean(value)`
