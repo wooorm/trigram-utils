@@ -2,7 +2,6 @@
 
 var trigram = require('n-gram').trigram
 var collapse = require('collapse-white-space')
-var trim = require('trim')
 
 var has = {}.hasOwnProperty
 
@@ -20,9 +19,9 @@ function clean(value) {
     return ''
   }
 
-  return trim(
-    collapse(String(value).replace(/[\u0021-\u0040]+/g, ' '))
-  ).toLowerCase()
+  return collapse(String(value).replace(/[\u0021-\u0040]+/g, ' '))
+    .trim()
+    .toLowerCase()
 }
 
 // Get clean, padded, trigrams.
