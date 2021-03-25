@@ -135,7 +135,7 @@ test('.asTuples', function (t) {
 
 test('.tuplesAsDictionary', function (t) {
   t.equal(
-    typeof tuplesAsDictionary('test'),
+    typeof tuplesAsDictionary(asTuples('test')),
     'object',
     'should return an object'
   )

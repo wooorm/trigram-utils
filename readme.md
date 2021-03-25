@@ -67,18 +67,18 @@ Get clean, padded trigrams (see [`n-gram`][n-gram]).
 
 ### `asDictionary(value)`
 
-Get clean trigrams as a dictionary: keys are trigrams, values are occurrence
-counts.
+Get clean trigrams as a dictionary (`Object<string, number>`): keys are
+trigrams, values are occurrence counts.
 
 ### `asTuples(value)`
 
-Get clean trigrams with occurrence counts as a tuple: first index (`0`) the
-trigram, second (`1`) the occurrence count.
+Get clean trigrams with occurrence counts as a tuple (`[string, number][]`):
+first index (`0`) the trigram, second (`1`) the occurrence count.
 
 ### `tuplesAsDictionary(tuples)`
 
 Transform an `Array` of trigram–occurrence tuples (as returned by
-[`asTuples()`][as-tuples]) as a dictionary (as returned by
+[`asTuples()`][as-tuples]) to a dictionary (as returned by
 [`asDictionary()`][as-dictionary])
 
 ## License

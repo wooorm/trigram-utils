@@ -3,9 +3,20 @@ import {collapseWhiteSpace} from 'collapse-white-space'
 
 var own = {}.hasOwnProperty
 
-// Clean `value`.
-// Removed general non-important (as in, for language detection) punctuation
-// marks, symbols, and digits.
+/**
+ * @typedef {[string, number]} TrigramTuple
+ * @typedef {TrigramTuple[]} TrigramTuples
+ * @typedef {Object.<string, number>} TrigramDictionary
+ */
+
+/**
+ * Clean `value`.
+ * Removed general non-important (as in, for language detection) punctuation
+ * marks, symbols, and digits.
+ *
+ * @param {string} [value]
+ * @returns {string}
+ */
 export function clean(value) {
   if (value === null || value === undefined) {
     return ''
@@ -16,15 +27,26 @@ export function clean(value) {
     .toLowerCase()
 }
 
-// Get clean, padded, trigrams.
+/**
+ * Get clean, padded, trigrams.
+ *
+ * @param {string} [value]
+ * @returns {string[]}
+ */
 export function trigrams(value) {
   return trigram(' ' + clean(value) + ' ')
 }
 
-// Get an `Object` with trigrams as its attributes, and their occurence count as
-// their values.
+/**
+ * Get an `Object` with trigrams as its attributes, and their occurence count as
+ * their values.
+ *
+ * @param {string} value
+ * @returns {TrigramDictionary}
+ */
 export function asDictionary(value) {
   var values = trigrams(value)
+  /** @type {TrigramDictionary} */
   var dictionary = {}
   var index = -1
 
@@ -39,10 +61,17 @@ export function asDictionary(value) {
   return dictionary
 }
 
-// Get an `Array` containing trigram--count tuples from a given value.
+/**
+ * Get an `Array` containing trigram--count tuples from a given value.
+ *
+ * @param {string} value
+ * @returns {TrigramTuples}
+ */
 export function asTuples(value) {
   var dictionary = asDictionary(value)
+  /** @type {TrigramTuples} */
   var tuples = []
+  /** @type {string} */
   var trigram
 
   for (trigram in dictionary) {
@@ -54,8 +83,14 @@ export function asTuples(value) {
   return tuples
 }
 
-// Get an `Array` containing trigram--count tuples from a given value.
+/**
+ * Get an `Array` containing trigram--count tuples from a given value.
+ *
+ * @param {TrigramTuples} tuples
+ * @returns {TrigramDictionary}
+ */
 export function tuplesAsDictionary(tuples) {
+  /** @type {TrigramDictionary} */
   var dictionary = {}
   var index = -1
 
@@ -66,7 +101,13 @@ export function tuplesAsDictionary(tuples) {
   return dictionary
 }
 
-// Deep regular sort on item at `1` in both `Object`s.
+/**
+ * Deep regular sort on item at `1` in both `Object`s.
+ *
+ * @param {TrigramTuple} a
+ * @param {TrigramTuple} b
+ * @returns {number}
+ */
 function sort(a, b) {
   return a[1] - b[1]
 }
