@@ -1,11 +1,11 @@
-import {trigram} from 'n-gram'
-import {collapseWhiteSpace} from 'collapse-white-space'
-
 /**
  * @typedef {[string, number]} TrigramTuple
  * @typedef {TrigramTuple[]} TrigramTuples
- * @typedef {Object.<string, number>} TrigramDictionary
+ * @typedef {Record<string, number>} TrigramDictionary
  */
+
+import {trigram} from 'n-gram'
+import {collapseWhiteSpace} from 'collapse-white-space'
 
 const own = {}.hasOwnProperty
 
@@ -14,7 +14,7 @@ const own = {}.hasOwnProperty
  * Removed general non-important (as in, for language detection) punctuation
  * marks, symbols, and digits.
  *
- * @param {string} [value]
+ * @param {string|null} [value]
  * @returns {string}
  */
 export function clean(value) {
