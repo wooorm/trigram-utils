@@ -46,14 +46,18 @@ test('.clean', function (t) {
 
 test('.trigrams', function (t) {
   t.ok(Array.isArray(trigrams('test')), 'should return an array')
-  t.equal(trigrams('test').join(), ' te,tes,est,st ', 'should return trigrams')
   t.equal(
-    trigrams('te@st').join(),
+    trigrams('test').join(','),
+    ' te,tes,est,st ',
+    'should return trigrams'
+  )
+  t.equal(
+    trigrams('te@st').join(','),
     ' te,te ,e s, st,st ',
     'should return cleaned trigrams (1)'
   )
   t.equal(
-    trigrams('\nte\tst ').join(),
+    trigrams('\nte\tst ').join(','),
     ' te,te ,e s, st,st ',
     'should return cleaned trigrams (2)'
   )
@@ -95,21 +99,21 @@ test('.asTuples', function (t) {
   t.equal(
     asTuples('test')
       .map((d) => d.join(';'))
-      .join(),
+      .join(','),
     ' te;1,tes;1,est;1,st ;1',
     'should return tuples'
   )
   t.equal(
     asTuples('te@st')
       .map((d) => d.join(';'))
-      .join(),
+      .join(','),
     ' te;1,te ;1,e s;1, st;1,st ;1',
     'should return cleaned trigrams (1)'
   )
   t.equal(
     asTuples('\nte\tst ')
       .map((d) => d.join(';'))
-      .join(),
+      .join(','),
     ' te;1,te ;1,e s;1, st;1,st ;1',
     'should return cleaned trigrams (2)'
   )
@@ -117,7 +121,7 @@ test('.asTuples', function (t) {
   t.equal(
     asTuples('testtest')
       .map((d) => d.join(';'))
-      .join(),
+      .join(','),
     ' te;1,stt;1,tte;1,st ;1,tes;2,est;2',
     'should count duplicate trigrams'
   )
@@ -125,7 +129,7 @@ test('.asTuples', function (t) {
   t.equal(
     asTuples('testtest')
       .map((d) => d.join(';'))
-      .join(),
+      .join(','),
     ' te;1,stt;1,tte;1,st ;1,tes;2,est;2',
     'should sort trigrams'
   )
