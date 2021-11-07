@@ -123,7 +123,8 @@ Turn trigram tuples (`Array<[string, number]>`) into a dictionary
 ## Types
 
 This package is fully typed with [TypeScript][].
-It exports an additional `Gemoji` type that models its respective interface.
+It exports additional `TrigramTuple`, `TrigramTuples`, and `TrigramDictionary`
+types that model their respective interfaces.
 
 ## Compatibility
 
