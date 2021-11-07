@@ -8,8 +8,8 @@ import {
 } from './index.js'
 
 test('.clean', function (t) {
-  var ignore = '!"#$%&\'()*+,-./0123456789:;<=>?@'
-  var index = -1
+  const ignore = '!"#$%&\'()*+,-./0123456789:;<=>?@'
+  let index = -1
 
   t.equal(typeof clean('test'), 'string', 'should return a string')
   t.equal(clean(), '', 'should accept a missing value')

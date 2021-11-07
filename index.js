@@ -7,7 +7,7 @@ import {collapseWhiteSpace} from 'collapse-white-space'
  * @typedef {Object.<string, number>} TrigramDictionary
  */
 
-var own = {}.hasOwnProperty
+const own = {}.hasOwnProperty
 
 /**
  * Clean `value`.
@@ -45,10 +45,10 @@ export function trigrams(value) {
  * @returns {TrigramDictionary}
  */
 export function asDictionary(value) {
-  var values = trigrams(value)
+  const values = trigrams(value)
   /** @type {TrigramDictionary} */
-  var dictionary = {}
-  var index = -1
+  const dictionary = {}
+  let index = -1
 
   while (++index < values.length) {
     if (own.call(dictionary, values[index])) {
@@ -68,11 +68,11 @@ export function asDictionary(value) {
  * @returns {TrigramTuples}
  */
 export function asTuples(value) {
-  var dictionary = asDictionary(value)
+  const dictionary = asDictionary(value)
   /** @type {TrigramTuples} */
-  var tuples = []
+  const tuples = []
   /** @type {string} */
-  var trigram
+  let trigram
 
   for (trigram in dictionary) {
     if (own.call(dictionary, trigram)) {
@@ -93,8 +93,8 @@ export function asTuples(value) {
  */
 export function tuplesAsDictionary(tuples) {
   /** @type {TrigramDictionary} */
-  var dictionary = {}
-  var index = -1
+  const dictionary = {}
+  let index = -1
 
   while (++index < tuples.length) {
     dictionary[tuples[index][0]] = tuples[index][1]
