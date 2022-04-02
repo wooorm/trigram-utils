@@ -45,17 +45,17 @@ In Node.js (version 12.20+, 14.14+, or 16.0+), install with [npm][]:
 npm install trigram-utils
 ```
 
-In Deno with [Skypack][]:
+In Deno with [`esm.sh`][esmsh]:
 
 ```js
-import * as trigramUtils from 'https://cdn.skypack.dev/trigram-utils@2?dts'
+import * as trigramUtils from 'https://esm.sh/trigram-utils@2'
 ```
 
-In browsers with [Skypack][]:
+In browsers with [`esm.sh`][esmsh]:
 
 ```html
 <script type="module">
-  import * as trigramUtils from 'https://cdn.skypack.dev/trigram-utils@2?min'
+  import * as trigramUtils from 'https://esm.sh/trigram-utils@2?bundle'
 </script>
 ```
 
@@ -174,7 +174,7 @@ See [How to Contribute to Open Source][contribute].
 
 [npm]: https://docs.npmjs.com/cli/install
 
-[skypack]: https://www.skypack.dev
+[esmsh]: https://esm.sh
 
 [license]: license
 
